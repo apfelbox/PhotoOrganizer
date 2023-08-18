@@ -40,22 +40,29 @@ final class PhotoCollection
 	 */
 	private function linkRaws () : void
 	{
+		foreach ($this->raws as $raw)
+		{
+			$exportedPhoto = $this->photos[$raw->getKey()] ?? null;
 
+			if (null !== $exportedPhoto)
+			{
+				$raw->linkToExported($exportedPhoto);
+			}
+		}
 	}
 
 	/**
-	 * @return iterable<AbstractPhoto>
+	 * @return array<AbstractPhoto>
 	 */
-	public function getAll () : iterable
+	public function getAll () : array
 	{
-		foreach ($this->raws as $photo)
-		{
-			yield $photo;
-		}
+		$result = \array_values($this->raws);
 
 		foreach ($this->photos as $photo)
 		{
-			yield $photo;
+			$result[] = $photo;
 		}
+
+		return $result;
 	}
 }

@@ -26,4 +26,12 @@ final class Photo extends AbstractPhoto
 
 		$this->raw = $raw;
 	}
+
+	/**
+	 *
+	 */
+	public function getRaw () : ?RawPhoto
+	{
+		return $this->raw;
+	}
 }

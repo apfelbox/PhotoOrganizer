@@ -37,4 +37,12 @@ final class RawPhoto extends AbstractPhoto
 		$this->exported = $photo;
 		$this->exported->setRaw($this);
 	}
+
+	/**
+	 *
+	 */
+	public function getExportedPhoto () : ?Photo
+	{
+		return $this->exported;
+	}
 }

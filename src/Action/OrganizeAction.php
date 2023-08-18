@@ -15,6 +15,11 @@ final class OrganizeAction
 		$loader = new PhotoLoader($factory);
 
 		$collection = $loader->loadPhotos($inDirectory);
+
+		foreach ($collection->getAll() as $file)
+		{
+
+		}
 		dd($collection);
 	}
 }
