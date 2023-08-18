@@ -2,13 +2,18 @@
 
 namespace App\Action;
 
+use App\Photo\Exif\ExifDataExtractor;
+use App\Photo\PhotoFactory;
 use App\Photo\PhotoLoader;
 
 final class OrganizeAction
 {
 	public function organizeFiles (string $inDirectory) : void
 	{
-		$loader = new PhotoLoader();
+		$exif = new ExifDataExtractor();
+		$factory = new PhotoFactory($exif);
+		$loader = new PhotoLoader($factory);
+
 		$collection = $loader->loadPhotos($inDirectory);
 		dd($collection);
 	}

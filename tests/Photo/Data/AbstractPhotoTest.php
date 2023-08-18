@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Test\App\Photo\Data;
+namespace Tests\App\Photo\Data;
 
+use App\Photo\Exif\ExifDataExtractor;
 use App\Photo\PhotoFactory;
 use App\Photo\PhotoType;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -79,7 +80,7 @@ final class AbstractPhotoTest extends TestCase
 		?PhotoType $expectedType,
 	) : void
 	{
-		$factory = new PhotoFactory();
+		$factory = new PhotoFactory(new ExifDataExtractor());
 		$photo = $factory->create($filePath, [
 			"CreateDate" => "2023:08:18 20:00:00",
 		]);
@@ -145,7 +146,7 @@ final class AbstractPhotoTest extends TestCase
 		string $expectedTargetPath,
 	) : void
 	{
-		$factory = new PhotoFactory();
+		$factory = new PhotoFactory(new ExifDataExtractor());
 		$photo = $factory->create($filePath, [
 			"CreateDate" => "2023:08:18 20:00:00",
 		]);

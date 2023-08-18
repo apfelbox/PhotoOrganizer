@@ -42,4 +42,20 @@ final class PhotoCollection
 	{
 
 	}
+
+	/**
+	 * @return iterable<AbstractPhoto>
+	 */
+	public function getAll () : iterable
+	{
+		foreach ($this->raws as $photo)
+		{
+			yield $photo;
+		}
+
+		foreach ($this->photos as $photo)
+		{
+			yield $photo;
+		}
+	}
 }

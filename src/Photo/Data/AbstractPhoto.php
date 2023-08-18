@@ -107,4 +107,12 @@ abstract class AbstractPhoto
 	{
 		return $this->fileName;
 	}
+
+	/**
+	 *
+	 */
+	public function getFilePath () : string
+	{
+		return $this->filePath;
+	}
 }

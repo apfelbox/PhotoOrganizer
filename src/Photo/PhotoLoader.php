@@ -5,9 +5,18 @@ namespace App\Photo;
 use App\Exception\PhotoOrganizerExceptionInterface;
 use App\Photo\Collection\PhotoCollection;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 final class PhotoLoader
 {
+	/**
+	 * @param PhotoFactory $factory
+	 */
+	public function __construct (
+		private readonly PhotoFactory $photoFactory,
+	) {}
+
+
 	/**
 	 *
 	 */
@@ -19,15 +28,21 @@ final class PhotoLoader
 			->depth("<= 1")
 			->files();
 
-		$factory = new PhotoFactory();
-
 		$photos = [];
 
 		foreach ($iterator as $file)
 		{
+			$relativeFilePath = $file->getRelativePathname();
+
+			// skip files in trash
+			if ("_trash" === \strtolower(\dirname($relativeFilePath)))
+			{
+				continue;
+			}
+
 			try
 			{
-				$photos[] = $factory->create($file->getRelativePathname());
+				$photos[] = $this->photoFactory->create($relativeFilePath);
 			}
 			catch (PhotoOrganizerExceptionInterface $exception)
 			{
