@@ -17,11 +17,11 @@ abstract class AbstractPhoto
 	 */
 	public function __construct (
 		protected readonly string $filePath,
-		protected readonly array $exifData,
+		array $exifData,
 	)
 	{
 		$this->fileName = \basename($this->filePath);
-		$this->extension = \pathinfo($this->fileName, \PATHINFO_EXTENSION);
+		$this->extension = \strtolower(\pathinfo($this->fileName, \PATHINFO_EXTENSION));
 		$this->timeCreated = $this->extractTimeCreatedFromExif($exifData);
 		$this->key = $this->extractKey($this->fileName);
 	}
@@ -83,5 +83,28 @@ abstract class AbstractPhoto
 	public function getType () : ?PhotoType
 	{
 		return $this->type;
+	}
+
+	/**
+	 */
+	public function getTargetPath () : string
+	{
+		$newFilePath = \sprintf(
+			"%s - %s.%s",
+			$this->timeCreated->format("Y-m-d H-i-s"),
+			$this->getKey(),
+			$this->extension,
+		);
+
+		return null !== $this->type
+			? "{$this->type->value}/{$newFilePath}"
+			: $newFilePath;
+	}
+
+	/**
+	 */
+	public function getFileName () : string
+	{
+		return $this->fileName;
 	}
 }

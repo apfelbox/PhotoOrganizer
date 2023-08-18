@@ -21,13 +21,25 @@ final class PhotoFactory
 	 */
 	public function create (\SplFileInfo $file) : AbstractPhoto
 	{
-		$isRaw = "raf" === \strtolower($file->getExtension());
+		return $this->createWithExifData(
+			$file->getPathname(),
+			$this->extractExifData($file),
+		);
+	}
 
-		$exif = $this->extractExifData($file);
+	/**
+	 *
+	 */
+	public function createWithExifData (
+		string $filePath,
+		array $exifData,
+	) : AbstractPhoto
+	{
+		$isRaw = "raf" === \strtolower(\pathinfo($filePath, \PATHINFO_EXTENSION));
 
 		return $isRaw
-			? new RawPhoto($file->getPathname(), $exif)
-			: new Photo($file->getPathname(), $exif);
+			? new RawPhoto($filePath, $exifData)
+			: new Photo($filePath, $exifData);
 	}
 
 	/**
