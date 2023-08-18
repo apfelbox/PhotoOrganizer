@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use App\Command\OrganizeCommand;
+use App\Exception\PhotoOrganizerExceptionInterface;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->add(new OrganizeCommand("organize"));
+
+try
+{
+	$application->run();
+}
+catch (PhotoOrganizerExceptionInterface $exception)
+{
+	echo sprintf("Error: %s\n", $exception->getMessage());
+	exit(1);
+}
