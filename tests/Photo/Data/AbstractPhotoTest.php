@@ -80,7 +80,7 @@ final class AbstractPhotoTest extends TestCase
 	) : void
 	{
 		$factory = new PhotoFactory();
-		$photo = $factory->createWithExifData($filePath, [
+		$photo = $factory->create($filePath, [
 			"CreateDate" => "2023:08:18 20:00:00",
 		]);
 
@@ -146,7 +146,7 @@ final class AbstractPhotoTest extends TestCase
 	) : void
 	{
 		$factory = new PhotoFactory();
-		$photo = $factory->createWithExifData($filePath, [
+		$photo = $factory->create($filePath, [
 			"CreateDate" => "2023:08:18 20:00:00",
 		]);
 
