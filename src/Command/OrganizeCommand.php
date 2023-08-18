@@ -27,7 +27,7 @@ final class OrganizeCommand extends Command
 		$io->title("Photos: organize");
 
 		$action = new OrganizeAction();
-		$action->organizeFiles(\getcwd());
+		$action->organizeFiles($io, \getcwd());
 
 		return 0;
 	}
