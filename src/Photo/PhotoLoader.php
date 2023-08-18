@@ -3,9 +3,7 @@
 namespace App\Photo;
 
 use App\Exception\PhotoOrganizerExceptionInterface;
-use App\Photo\Data\Photo;
 use App\Photo\Collection\PhotoCollection;
-use App\Photo\Data\RawPhoto;
 use Symfony\Component\Finder\Finder;
 
 final class PhotoLoader
@@ -29,7 +27,7 @@ final class PhotoLoader
 		{
 			try
 			{
-				$photos[] = $factory->create($file);
+				$photos[] = $factory->create($file->getRelativePathname());
 			}
 			catch (PhotoOrganizerExceptionInterface $exception)
 			{
