@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 final class AbstractPhotoTest extends TestCase
 {
+	/**
+	 *
+	 */
 	public static function provideStaticParse () : iterable
 	{
 		yield [
@@ -85,7 +88,9 @@ final class AbstractPhotoTest extends TestCase
 		self::assertSame($expectedType, $photo->getType());
 	}
 
-
+	/**
+	 *
+	 */
 	public static function provideTargetPath () : iterable
 	{
 		$date = "2023-08-18 20-00-00";
