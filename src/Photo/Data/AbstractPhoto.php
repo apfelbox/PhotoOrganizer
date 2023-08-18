@@ -62,7 +62,11 @@ abstract class AbstractPhoto
 	 */
 	private function extractKey (string $baseName) : string
 	{
-		return "key";
+		$fileName = \pathinfo($baseName, \PATHINFO_FILENAME);
+
+		$fileName = \preg_replace("~^\d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2} -~", "", $fileName);
+
+		return \trim($fileName);
 	}
 
 	/**
@@ -71,5 +75,13 @@ abstract class AbstractPhoto
 	public function getKey () : string
 	{
 		return $this->key;
+	}
+
+	/**
+	 *
+	 */
+	public function getType () : ?PhotoType
+	{
+		return $this->type;
 	}
 }
