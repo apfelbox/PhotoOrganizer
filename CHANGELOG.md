@@ -1,3 +1,9 @@
+1.0.3
+=====
+
+* (improvement) Improve output of organize command.
+
+
 1.0.2
 =====
 

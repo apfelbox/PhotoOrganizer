@@ -28,7 +28,7 @@ final class OrganizeAction
 
 		foreach ($collection->getAll() as $file)
 		{
-			$io->write("• {$file->getFilePath()} ... ");
+			$io->writeln("• {$file->getFilePath()}");
 
 			if ($file->getFilePath() !== $file->getTargetPath())
 			{
@@ -41,11 +41,11 @@ final class OrganizeAction
 					Path::join($inDirectory, $file->getFilePath()),
 					$fullTargetPath,
 				);
-				$io->writeln("<fg=green>moved</>");
+				$io->writeln(\sprintf("   └ moved to <fg=blue>%s</>", $file->getTargetPath()));
 			}
 			else
 			{
-				$io->writeln("<fg=gray>skipped</>");
+				$io->writeln("   └ <fg=gray>skipped</>");
 			}
 		}
 	}
