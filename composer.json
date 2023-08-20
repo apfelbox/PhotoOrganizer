@@ -32,6 +32,9 @@
 			"Tests\\App\\": "tests/"
 		}
 	},
+	"bin": [
+		"bin/photos"
+	],
 	"config": {
 		"allow-plugins": {
 			"bamarni/composer-bin-plugin": true
