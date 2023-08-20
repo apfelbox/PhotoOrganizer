@@ -65,4 +65,17 @@ final class PhotoCollection
 
 		return $result;
 	}
+
+	/**
+	 * Returns all RAW photos without exported file
+	 *
+	 * @return RawPhoto[]
+	 */
+	public function getRawsWithoutExport () : array
+	{
+		return \array_filter(
+			$this->raws,
+			static fn (RawPhoto $photo) => null === $photo->getExportedPhoto(),
+		);
+	}
 }

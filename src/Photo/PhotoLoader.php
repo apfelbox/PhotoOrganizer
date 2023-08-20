@@ -5,6 +5,7 @@ namespace App\Photo;
 use App\Exception\PhotoOrganizerExceptionInterface;
 use App\Photo\Collection\PhotoCollection;
 use App\Photo\Exif\ExifDataCollection;
+use App\Storage\Trash;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 
@@ -43,7 +44,7 @@ final class PhotoLoader
 			$relativeFilePath = $file->getRelativePathname();
 
 			// skip files in trash
-			if ("_trash" === \strtolower(\dirname($relativeFilePath)))
+			if ($this->isInTrash($relativeFilePath))
 			{
 				continue;
 			}
@@ -63,5 +64,16 @@ final class PhotoLoader
 		$io?->newLine();
 
 		return new PhotoCollection($photos);
+	}
+
+	/**
+	 *
+	 */
+	private function isInTrash (string $filePath)
+	{
+		return \str_contains(
+			\strtoupper($filePath),
+			"/" . Trash::TRASH_DIR . "/",
+		);
 	}
 }

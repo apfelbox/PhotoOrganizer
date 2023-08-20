@@ -11,6 +11,9 @@ use Symfony\Component\Filesystem\Path;
 
 final class OrganizeAction
 {
+	/**
+	 *
+	 */
 	public function organizeFiles (
 		SymfonyStyle $io,
 		string $inDirectory,
@@ -21,7 +24,7 @@ final class OrganizeAction
 
 		$exifDataExtractor = new ExifDataExtractor();
 		$exifDataCollection = $exifDataExtractor->extractInDir($inDirectory);
-		$collection = $loader->loadPhotos($inDirectory, $io);
+		$collection = $loader->loadPhotos($inDirectory, $exifDataCollection);
 
 		foreach ($collection->getAll() as $file)
 		{

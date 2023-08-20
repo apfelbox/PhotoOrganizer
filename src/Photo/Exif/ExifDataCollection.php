@@ -38,6 +38,6 @@ class ExifDataCollection
 			));
 		}
 
-		return $this->indexedData;
+		return $this->indexedData[$filePath];
 	}
 }

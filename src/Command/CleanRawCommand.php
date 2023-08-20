@@ -2,13 +2,13 @@
 
 namespace App\Command;
 
-use App\Action\OrganizeAction;
+use App\Action\CleanRawAction;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class OrganizeCommand extends Command
+final class CleanRawCommand extends Command
 {
 	/**
 	 * @inheritDoc
@@ -16,13 +16,11 @@ final class OrganizeCommand extends Command
 	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new SymfonyStyle($input, $output);
-		$io->title("Photos: organize");
+		$io->title("Photos: clean RAWs");
 
-		$action = new OrganizeAction();
-		$action->organizeFiles($io, \getcwd());
-
-		$io->success("All done");
-
-		return 0;
+		$action = new CleanRawAction();
+		return $action->cleanRawFiles($io, \getcwd())
+			? 0
+			: 1;
 	}
 }
