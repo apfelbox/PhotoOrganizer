@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 final class PhotoLoader
 {
 	/**
-	 * @param PhotoFactory $factory
 	 */
 	public function __construct (
 		private readonly PhotoFactory $photoFactory,
