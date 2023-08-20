@@ -5,6 +5,7 @@ namespace Tests\App\Photo;
 use App\Photo\Collection\PhotoCollection;
 use App\Photo\Data\Photo;
 use App\Photo\Data\RawPhoto;
+use App\Photo\Exif\ExifDataCollection;
 use App\Photo\Exif\ExifDataExtractor;
 use App\Photo\PhotoFactory;
 use App\Photo\PhotoLoader;
@@ -78,16 +79,15 @@ final class PhotoLoaderTest extends TestCase
 	 */
 	private function fetchCollectionForDirectory (string $directoryPath) : PhotoCollection
 	{
-		$exif = $this->createMock(ExifDataExtractor::class);
+		$exif = $this->createMock(ExifDataCollection::class);
 
-		$exif->method("extractExifData")
+		$exif->method("getData")
 			->willReturn([
 				"CreateDate" => "2023:08:18 20:00:00",
 			]);
 
-		$factory = new PhotoFactory($exif);
-		$loader = new PhotoLoader($factory);
+		$loader = new PhotoLoader(new PhotoFactory());
 
-		return $loader->loadPhotos($directoryPath);
+		return $loader->loadPhotos($directoryPath, $exif);
 	}
 }

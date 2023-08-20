@@ -4,8 +4,9 @@ namespace App\Photo;
 
 use App\Exception\PhotoOrganizerExceptionInterface;
 use App\Photo\Collection\PhotoCollection;
+use App\Photo\Exif\ExifDataCollection;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 final class PhotoLoader
 {
@@ -20,7 +21,11 @@ final class PhotoLoader
 	/**
 	 *
 	 */
-	public function loadPhotos (string $directory) : PhotoCollection
+	public function loadPhotos (
+		string $directory,
+		ExifDataCollection $exifDataCollection,
+		?SymfonyStyle $io = null,
+	) : PhotoCollection
 	{
 		$iterator = Finder::create()
 			->in($directory)
@@ -28,10 +33,13 @@ final class PhotoLoader
 			->depth("<= 1")
 			->files();
 
+		$io?->writeln("• Detecting files in directory...");
+		$progress = $io?->createProgressBar(\iterator_count($iterator));
 		$photos = [];
 
 		foreach ($iterator as $file)
 		{
+			$progress?->advance();
 			$relativeFilePath = $file->getRelativePathname();
 
 			// skip files in trash
@@ -42,13 +50,17 @@ final class PhotoLoader
 
 			try
 			{
-				$photos[] = $this->photoFactory->create($relativeFilePath);
+				$exifData = $exifDataCollection->getData($file->getPathname());
+				$photos[] = $this->photoFactory->create($relativeFilePath, $exifData);
 			}
 			catch (PhotoOrganizerExceptionInterface $exception)
 			{
 				echo "Found invalid filed '{$file->getPathname()}': {$exception->getMessage()}\n";
 			}
 		}
+
+		$progress?->finish();
+		$io?->newLine();
 
 		return new PhotoCollection($photos);
 	}

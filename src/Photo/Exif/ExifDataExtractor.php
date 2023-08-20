@@ -18,23 +18,26 @@ class ExifDataExtractor
 	/**
 	 *
 	 */
-	public function extractExifData (string $filePath) : array
+	public function extractInDir (string $dir) : ExifDataCollection
 	{
 		$process = new Process([
 			$this->getExifTool(),
+			"-r",
 			"-json",
-			$filePath,
+			$dir,
 		]);
 
 		try
 		{
 			$process->mustRun();
 
-			return \json_decode(
+			$raw = \json_decode(
 				$process->getOutput(),
 				true,
 				flags: \JSON_THROW_ON_ERROR,
-			)[0];
+			);
+
+			return new ExifDataCollection($raw);
 		}
 		catch (ProcessFailedException|\JsonException $exception)
 		{

@@ -16,12 +16,12 @@ final class OrganizeAction
 		string $inDirectory,
 	) : void
 	{
-		$exif = new ExifDataExtractor();
-		$factory = new PhotoFactory($exif);
-		$loader = new PhotoLoader($factory);
+		$loader = new PhotoLoader(new PhotoFactory());
 		$filesystem = new Filesystem();
 
-		$collection = $loader->loadPhotos($inDirectory);
+		$exifDataExtractor = new ExifDataExtractor();
+		$exifDataCollection = $exifDataExtractor->extractInDir($inDirectory);
+		$collection = $loader->loadPhotos($inDirectory, $io);
 
 		foreach ($collection->getAll() as $file)
 		{
