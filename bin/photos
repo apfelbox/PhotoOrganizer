@@ -20,7 +20,10 @@ use App\Command\OrganizeCommand;
 use App\Exception\PhotoOrganizerExceptionInterface;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
+$application = new Application(
+	"Photo Organizer",
+	"1.0.2",
+);
 $application->add(new OrganizeCommand("organize"));
 $application->add(new CleanRawCommand("clean-raws"));
 
