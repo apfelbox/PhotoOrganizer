@@ -9,6 +9,11 @@ use App\Photo\Data\RawPhoto;
 
 final class PhotoFactory
 {
+	private const RAW_FILE_EXTENSIONS = [
+		// Fuji
+		"raf",
+	];
+
 	/**
 	 * @throws PhotoOrganizerExceptionInterface
 	 */
@@ -17,9 +22,9 @@ final class PhotoFactory
 		array $exifData,
 	) : AbstractPhoto
 	{
-		$isRaw = "raf" === \strtolower(\pathinfo($filePath, \PATHINFO_EXTENSION));
+		$normalizedFileExtension = \strtolower(\pathinfo($filePath, \PATHINFO_EXTENSION));
 
-		return $isRaw
+		return \in_array($normalizedFileExtension, self::RAW_FILE_EXTENSIONS, true)
 			? new RawPhoto($filePath, $exifData)
 			: new Photo($filePath, $exifData);
 	}

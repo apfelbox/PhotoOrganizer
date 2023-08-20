@@ -1,4 +1,13 @@
 {
+	"name": "apfelbox/photo-organizer",
+	"description": "A small tool to organize (RAW + exported) photos",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jannik Zschiesche",
+			"homepage": "https://jannik.io/"
+		}
+	],
 	"require": {
 		"php": ">= 8.2",
 		"ext-json": "*",
@@ -23,6 +32,9 @@
 			"Tests\\App\\": "tests/"
 		}
 	},
+	"bin": [
+		"bin/photos"
+	],
 	"config": {
 		"allow-plugins": {
 			"bamarni/composer-bin-plugin": true
