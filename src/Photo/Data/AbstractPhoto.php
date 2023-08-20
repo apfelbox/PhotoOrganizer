@@ -33,7 +33,7 @@ abstract class AbstractPhoto
 	{
 		// possible fields to parse with their format
 		$possibilities = [
-			["CreateDate", "Y:m:d H:i:s"]
+			["CreateDate", "Y:m:d H:i:s"],
 		];
 
 		foreach ($possibilities as [$field, $format])
@@ -63,8 +63,7 @@ abstract class AbstractPhoto
 	private function extractKey (string $baseName) : string
 	{
 		$fileName = \pathinfo($baseName, \PATHINFO_FILENAME);
-
-		$fileName = \preg_replace("~^\d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2} -~", "", $fileName);
+		$fileName = (string) \preg_replace("~^\\d{4}-\\d{2}-\\d{2} \\d{2}-\\d{2}-\\d{2} -~", "", $fileName);
 
 		return \trim($fileName);
 	}

@@ -28,6 +28,7 @@ final class PhotoCollection
 			}
 			else
 			{
+				\assert($photo instanceof Photo);
 				$this->photos[$photo->getKey()] = $photo;
 			}
 		}

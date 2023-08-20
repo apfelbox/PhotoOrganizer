@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 final class PhotoLoader
 {
 	/**
-	 * @param PhotoFactory $factory
 	 */
 	public function __construct (
 		private readonly PhotoFactory $photoFactory,
@@ -69,11 +68,9 @@ final class PhotoLoader
 	/**
 	 *
 	 */
-	private function isInTrash (string $filePath)
+	private function isInTrash (string $filePath) : bool
 	{
-		return \str_contains(
-			\strtoupper($filePath),
-			"/" . Trash::TRASH_DIR . "/",
-		);
+		$normalizedPath = "/" . \strtoupper(\ltrim($filePath, "/"));
+		return \str_contains($normalizedPath, "/" . Trash::TRASH_DIR . "/");
 	}
 }

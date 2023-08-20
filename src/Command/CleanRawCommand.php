@@ -18,8 +18,11 @@ final class CleanRawCommand extends Command
 		$io = new SymfonyStyle($input, $output);
 		$io->title("Photos: clean RAWs");
 
+		$cwd = \getcwd();
+		\assert(\is_string($cwd));
+
 		$action = new CleanRawAction();
-		return $action->cleanRawFiles($io, \getcwd())
+		return $action->cleanRawFiles($io, $cwd)
 			? 0
 			: 1;
 	}
