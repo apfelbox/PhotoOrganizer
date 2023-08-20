@@ -24,7 +24,7 @@ final class PhotoFactory
 	{
 		$normalizedFileExtension = \strtolower(\pathinfo($filePath, \PATHINFO_EXTENSION));
 
-		return \in_array($normalizedFileExtension, self::RAW_FILE_EXTENSIONS)
+		return \in_array($normalizedFileExtension, self::RAW_FILE_EXTENSIONS, true)
 			? new RawPhoto($filePath, $exifData)
 			: new Photo($filePath, $exifData);
 	}
