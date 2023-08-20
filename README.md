@@ -15,7 +15,7 @@ Installation
 Install it via composer:
 
 ```bash
-composer -g install apfelbox/photo-organizer
+composer global require jannik/photo-organizer
 ```
 
 You also need to install [`exiftool`](https://github.com/exiftool/exiftool) and have it in the PATH.
