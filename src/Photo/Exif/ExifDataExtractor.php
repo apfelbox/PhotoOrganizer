@@ -37,12 +37,19 @@ class ExifDataExtractor
 				flags: \JSON_THROW_ON_ERROR,
 			);
 
+			if (!\is_array($raw))
+			{
+				throw new ExifDataExtractionFailedException(
+					\sprintf("Failed to extract exif data: invalid return type %s", \get_debug_type($raw)),
+				);
+			}
+
 			return new ExifDataCollection($raw);
 		}
 		catch (ProcessFailedException|\JsonException $exception)
 		{
 			throw new ExifDataExtractionFailedException(
-				\sprintf("Failed to extract exif data for file '%s'", $filePath),
+				\sprintf("Failed to extract exif data: %s", $exception->getMessage()),
 				previous: $exception,
 			);
 		}

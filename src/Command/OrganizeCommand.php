@@ -18,8 +18,11 @@ final class OrganizeCommand extends Command
 		$io = new SymfonyStyle($input, $output);
 		$io->title("Photos: organize");
 
+		$cwd = \getcwd();
+		\assert(\is_string($cwd));
+
 		$action = new OrganizeAction();
-		$action->organizeFiles($io, \getcwd());
+		$action->organizeFiles($io, $cwd);
 
 		$io->success("All done");
 
